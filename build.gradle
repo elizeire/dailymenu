@@ -35,6 +35,14 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-actuator-docs')
 	compile('org.springframework.boot:spring-boot-starter-jersey')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.0.1'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.0.2'
+	// jsoup HTML parser library @ http://jsoup.org/
+	compile 'org.jsoup:jsoup:1.10.2'	
+	compile 'com.google.http-client:google-http-client-gson:1.19.0'
+ 	compile 'com.google.apis:google-api-services-translate:v2-rev48-1.22.0'	
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
