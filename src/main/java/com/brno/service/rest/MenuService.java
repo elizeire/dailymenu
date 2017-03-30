@@ -117,7 +117,11 @@ public class MenuService {
     response.append("<html><body><table>");
 
     for (String menu : menuList) {
-      response.append("<tr><td>");
+      if(menu.startsWith("::")){
+        response.append("<tr bgcolor='#99ffe6'><td>");
+      }else{
+        response.append("<tr><td>");
+      }
       response.append(menu);
       response.append("</tr></td>");
     }
