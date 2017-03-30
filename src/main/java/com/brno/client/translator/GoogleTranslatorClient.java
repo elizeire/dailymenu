@@ -32,7 +32,7 @@ public class GoogleTranslatorClient implements TranslatorClient {
           // Target language
           languageTo);
       // Set your API-Key from https://console.developers.google.com/
-      list.setKey("AIzaSyAof82SeqkFjpj3BKnsZTT5-E4u8k17w7k");
+      list.setKey("change for your own key");
       TranslationsListResponse response = list.execute();
       for (TranslationsResource tr : response.getTranslations()) {
         translatedList.add(tr.getTranslatedText());
