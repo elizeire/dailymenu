@@ -7,6 +7,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,6 +20,7 @@ public class NapurkynceScraper implements Scraper {
   }
 
   @Override
+  @Cacheable("Napurkynce menus")
   public List<String> getMenu() {
 
     Document doc;

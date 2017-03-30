@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import com.brno.client.translator.TranslatorClient;
@@ -24,6 +25,7 @@ public class RubinScraper implements Scraper {
 
 
   @Override
+  @Cacheable("Rubin menus")
   public List<String> getMenu() {
 
     Document doc;

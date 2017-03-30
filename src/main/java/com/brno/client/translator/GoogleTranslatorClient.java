@@ -38,6 +38,7 @@ public class GoogleTranslatorClient implements TranslatorClient {
         translatedList.add(tr.getTranslatedText());
       }
     } catch (Exception e) {
+      text.forEach(System.out::println);
       e.printStackTrace();
     }
 

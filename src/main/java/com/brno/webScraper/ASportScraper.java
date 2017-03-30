@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import com.brno.client.translator.TranslatorClient;
@@ -22,12 +23,8 @@ public class ASportScraper implements Scraper {
   @Qualifier("google")
   private TranslatorClient googleTranslator;
 
-  public static void main(String[] args) {
-    ASportScraper na = new ASportScraper();
-    na.getMenu();
-  }
-
   @Override
+  @Cacheable("A-sport menus")
   public List<String> getMenu() {
     Document doc;
     List<String> menuList = new ArrayList<String>();
