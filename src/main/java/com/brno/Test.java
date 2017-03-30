@@ -7,8 +7,6 @@ import java.net.URL;
 
 import javax.naming.Context;
 
-import net.minidev.json.JSONObject;
-
 public class Test {
 
   private static final String DAILYMENU_API = "http://guarded-peak-75773.herokuapp.com/menu/restaurant/%s";
