@@ -34,8 +34,7 @@ public class MenuService {
   private Scraper rubinScraper;
 
   @RequestMapping(value = "/restaurant/{restaurantId}", method = RequestMethod.GET)
-  public String move(@PathVariable("restaurantId") String param) {
-    // Robot robotTest = new Robot();
+  public String getMenu(@PathVariable("restaurantId") String param) {
     String response = "";
     RestaurantsCodes code = RestaurantsCodes.valueOf(param);
     List<String> menuList = new ArrayList<String>();
@@ -76,5 +75,54 @@ public class MenuService {
     }
 
     return response;
+  }
+  
+  @RequestMapping(value = "/restaurant/html/{restaurantId}", method = RequestMethod.GET)
+  public String getHtmlMenu(@PathVariable("restaurantId") String param) {
+    StringBuilder response = new StringBuilder();
+    RestaurantsCodes code = RestaurantsCodes.valueOf(param);
+    List<String> menuList = new ArrayList<String>();
+    switch (code) {
+    case MIKI:
+
+      menuList.addAll(mikiScraper.getMenu());
+      break;
+
+    case NAPURKYNCE:
+
+      menuList.addAll(napurkynceScraper.getMenu());
+      break;
+
+    case ASPORT:
+
+      menuList.addAll(aSportScraper.getMenu());
+      break;
+
+    case RUBIN:
+
+      menuList.addAll(rubinScraper.getMenu());
+      break;
+
+    case ALL:
+      menuList.addAll(mikiScraper.getMenu());
+      menuList.addAll(napurkynceScraper.getMenu());
+      menuList.addAll(aSportScraper.getMenu());
+      menuList.addAll(rubinScraper.getMenu());
+      break;
+
+    default:
+      break;
+    }
+    
+    response.append("<html><body><table>");
+
+    for (String menu : menuList) {
+      response.append("<tr><td>");
+      response.append(menu);
+      response.append("</tr></td>");
+    }
+    response.append("</table></body></html>");
+
+    return response.toString();
   }
 }
