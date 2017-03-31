@@ -14,9 +14,36 @@ import com.google.api.services.translate.model.TranslationsResource;
 @Qualifier("google")
 public class GoogleTranslatorClient implements TranslatorClient {
 
+  private static Integer chunckSize = 50;
 
   @Override
-  public List<String> translate(List<String> text, String languageTo) {
+  public List<String> translate(List<String> textList, String languageTo) {
+
+    List<String> translatedList = new ArrayList<String>();
+
+    if (textList.size() > chunckSize) {
+
+      Integer totalLines = textList.size();
+      Integer totalChunks = ((totalLines % chunckSize)==0?totalLines / chunckSize:(totalLines / chunckSize)+1);
+      Integer chunksCounter = 0;
+      Integer indexIni = 0;
+
+      while (chunksCounter < totalChunks) {
+        Integer indexEnd = (indexIni + chunckSize)>textList.size()?textList.size():indexIni + chunckSize;
+        translatedList.addAll(
+            translateChunkes(textList.subList(indexIni, indexEnd), languageTo));
+        indexIni = indexIni + chunckSize;
+        chunksCounter++;
+      }
+
+    } else {
+      translatedList = translateChunkes(textList, languageTo);
+    }
+
+    return translatedList;
+  }
+
+  private List<String> translateChunkes(List<String> text, String languageTo) {
 
     List<String> translatedList = new ArrayList<String>();
     try {
@@ -32,12 +59,13 @@ public class GoogleTranslatorClient implements TranslatorClient {
           // Target language
           languageTo);
       // Set your API-Key from https://console.developers.google.com/
-      list.setKey("AIzaSyAof82SeqkFjpj3BKnsZTT5-E4u8k17w7k");
+      list.setKey("your API-Key");
       TranslationsListResponse response = list.execute();
       for (TranslationsResource tr : response.getTranslations()) {
         translatedList.add(tr.getTranslatedText());
       }
     } catch (Exception e) {
+      System.out.println(text.size());
       text.forEach(System.out::println);
       e.printStackTrace();
     }
