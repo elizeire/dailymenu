@@ -30,6 +30,10 @@ configurations {
 	providedRuntime
 }
 
+test {
+    exclude '**/*IntegrationTest*'
+}
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-actuator-docs')

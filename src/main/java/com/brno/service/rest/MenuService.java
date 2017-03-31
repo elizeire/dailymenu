@@ -23,7 +23,6 @@ public class MenuService {
     String response = "";
     List<String> menuListTranslated = dailyMenuBusiness.getMenuTranslated(restaurantId, "EN");
 
-
     for (String string : menuListTranslated) {
       response = response + string + "\n";
     }
@@ -35,21 +34,7 @@ public class MenuService {
   public String getHtmlMenu(@PathVariable("restaurantId") String restaurantId) {
     StringBuilder response = new StringBuilder();
   
-    List<String> menuListTranslated = dailyMenuBusiness.getMenuTranslated(restaurantId, "EN");
-    
-    response.append("<html><body><table>");
-
-    for (String menu : menuListTranslated) {
-      if(menu.startsWith("::")){
-        response.append("<tr bgcolor='#99ffe6'><td>");
-      }else{
-        response.append("<tr><td>");
-      }
-      
-      response.append(menu);
-      response.append("</tr></td>");
-    }
-    response.append("</table></body></html>");
+   response.append(getHtmlMenuByLanguage(restaurantId,"EN"));
 
     return response.toString();
   }

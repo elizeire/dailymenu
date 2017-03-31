@@ -86,4 +86,6 @@ public class DailyMenuBusinessImpl implements DailyMenuBusiness {
     menuListTranslated.addAll(googleTranslator.translate(menuList, languageCode));
     return menuListTranslated;
   }
+  
+  
 }

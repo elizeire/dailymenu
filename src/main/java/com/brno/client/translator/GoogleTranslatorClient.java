@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import com.google.api.services.translate.Translate;
 import com.google.api.services.translate.model.TranslationsListResponse;
-import com.google.api.services.translate.model.TranslationsResource;
 
 @Component
 @Qualifier("google")
@@ -36,6 +36,7 @@ public class GoogleTranslatorClient implements TranslatorClient {
    * @param languageTo
    * @return translatedList
    */
+  @Cacheable("translated menus")
   public List<String> translate(List<String> textList, String languageTo) {
 
     List<String> translatedList = null;
@@ -58,7 +59,6 @@ public class GoogleTranslatorClient implements TranslatorClient {
    * @return translatedList
    */
   private List<String> sendRequest(List<String> text, String languageTo) {
-
     List<String> translatedList = new ArrayList<String>();
     Translate translator = getDefaulsTranslator();
     try {
@@ -67,9 +67,9 @@ public class GoogleTranslatorClient implements TranslatorClient {
       // Set your API-Key from https://console.developers.google.com/
       list.setKey(apiKey);
       TranslationsListResponse response = list.execute();
-      for (TranslationsResource tr : response.getTranslations()) {
-        translatedList.add(tr.getTranslatedText());
-      }
+      
+      response.getTranslations().forEach(tr->translatedList.add(tr.getTranslatedText()));
+      
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.toString(), e);
     }
