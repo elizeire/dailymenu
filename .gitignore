@@ -1,3 +1,6 @@
+### Properties###
+/src/main/resources/application.properties
+### gradle ###
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
