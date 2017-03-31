@@ -1,81 +1,27 @@
 package com.brno.service.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brno.client.translator.TranslatorClient;
-import com.brno.domain.RestaurantsCodes;
-import com.brno.webScraper.Scraper;
+import com.brno.business.DailyMenuBusiness;
 
 @RestController
 @RequestMapping("/menu")
 public class MenuService {
 
   @Autowired
-  @Qualifier("miki")
-  private Scraper mikiScraper;
+  private DailyMenuBusiness dailyMenuBusiness;
 
-  @Autowired
-  @Qualifier("napurkynce")
-  private Scraper napurkynceScraper;
-
-  @Autowired
-  @Qualifier("aSport")
-  private Scraper aSportScraper;
-
-  @Autowired
-  @Qualifier("rubin")
-  private Scraper rubinScraper;
-  
-  @Autowired
-  @Qualifier("google")
-  private TranslatorClient googleTranslator;
 
   @RequestMapping(value = "/restaurant/{restaurantId}", method = RequestMethod.GET)
-  public String getMenu(@PathVariable("restaurantId") String param) {
+  public String getMenu(@PathVariable("restaurantId") String restaurantId) {
     String response = "";
-    RestaurantsCodes code = RestaurantsCodes.valueOf(param);
-    List<String> menuList = new ArrayList<String>();
-    List<String> menuListTranslated = new ArrayList<String>();
-    switch (code) {
-    case MIKI:
-
-      menuList.addAll(mikiScraper.getMenu());
-      break;
-
-    case NAPURKYNCE:
-
-      menuList.addAll(napurkynceScraper.getMenu());
-      break;
-
-    case ASPORT:
-
-      menuList.addAll(aSportScraper.getMenu());
-      break;
-
-    case RUBIN:
-
-      menuList.addAll(rubinScraper.getMenu());
-      break;
-
-    case ALL:
-      menuList.addAll(mikiScraper.getMenu());
-      menuList.addAll(napurkynceScraper.getMenu());
-      menuList.addAll(aSportScraper.getMenu());
-      menuList.addAll(rubinScraper.getMenu());
-      break;
-
-    default:
-      break;
-    }
-    menuListTranslated.addAll(googleTranslator.translate(menuList,"EN"));
+    List<String> menuListTranslated = dailyMenuBusiness.getMenuTranslated(restaurantId, "EN");
 
 
     for (String string : menuListTranslated) {
@@ -86,44 +32,10 @@ public class MenuService {
   }
   
   @RequestMapping(value = "/restaurant/html/{restaurantId}", method = RequestMethod.GET)
-  public String getHtmlMenu(@PathVariable("restaurantId") String param) {
+  public String getHtmlMenu(@PathVariable("restaurantId") String restaurantId) {
     StringBuilder response = new StringBuilder();
-    RestaurantsCodes code = RestaurantsCodes.valueOf(param);
-    List<String> menuList = new ArrayList<String>();
-    List<String> menuListTranslated = new ArrayList<String>();
-    switch (code) {
-    case MIKI:
-
-      menuList.addAll(mikiScraper.getMenu());
-      break;
-
-    case NAPURKYNCE:
-
-      menuList.addAll(napurkynceScraper.getMenu());
-      break;
-
-    case ASPORT:
-
-      menuList.addAll(aSportScraper.getMenu());
-      break;
-
-    case RUBIN:
-
-      menuList.addAll(rubinScraper.getMenu());
-      break;
-
-    case ALL:
-      menuList.addAll(mikiScraper.getMenu());
-      menuList.addAll(napurkynceScraper.getMenu());
-      menuList.addAll(aSportScraper.getMenu());
-      menuList.addAll(rubinScraper.getMenu());
-      break;
-
-    default:
-      break;
-    }
-    
-    menuListTranslated.addAll(googleTranslator.translate(menuList,"EN"));
+  
+    List<String> menuListTranslated = dailyMenuBusiness.getMenuTranslated(restaurantId, "EN");
     
     response.append("<html><body><table>");
 
@@ -143,44 +55,10 @@ public class MenuService {
   }
   
   @RequestMapping(value = "/restaurant/html/{restaurantId}/{languageCode}", method = RequestMethod.GET)
-  public String getHtmlMenuByLanguage(@PathVariable("restaurantId") String param,@PathVariable("languageCode") String languageCode) {
+  public String getHtmlMenuByLanguage(@PathVariable("restaurantId") String restaurantId,@PathVariable("languageCode") String languageCode) {
     StringBuilder response = new StringBuilder();
-    RestaurantsCodes code = RestaurantsCodes.valueOf(param);
-    List<String> menuList = new ArrayList<String>();
-    List<String> menuListTranslated = new ArrayList<String>();
-    switch (code) {
-    case MIKI:
-
-      menuList.addAll(mikiScraper.getMenu());
-      break;
-
-    case NAPURKYNCE:
-
-      menuList.addAll(napurkynceScraper.getMenu());
-      break;
-
-    case ASPORT:
-
-      menuList.addAll(aSportScraper.getMenu());
-      break;
-
-    case RUBIN:
-
-      menuList.addAll(rubinScraper.getMenu());
-      break;
-
-    case ALL:
-      menuList.addAll(mikiScraper.getMenu());
-      menuList.addAll(napurkynceScraper.getMenu());
-      menuList.addAll(aSportScraper.getMenu());
-      menuList.addAll(rubinScraper.getMenu());
-      break;
-
-    default:
-      break;
-    }
-    
-    menuListTranslated.addAll(googleTranslator.translate(menuList,languageCode));
+  
+    List<String> menuListTranslated = dailyMenuBusiness.getMenuTranslated(restaurantId, languageCode);
     
     response.append("<html><body><table>");
 
