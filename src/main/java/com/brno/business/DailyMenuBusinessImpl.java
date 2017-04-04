@@ -29,6 +29,10 @@ public class DailyMenuBusinessImpl implements DailyMenuBusiness {
   @Autowired
   @Qualifier("rubin")
   private Scraper rubinScraper;
+  
+  @Autowired
+  @Qualifier("nepal")
+  private Scraper nepalScraper;
 
   @Autowired
   @Qualifier("google")
@@ -42,6 +46,20 @@ public class DailyMenuBusinessImpl implements DailyMenuBusiness {
     RestaurantsCodes code = RestaurantsCodes.valueOf(restaurantId);
     List<String> menuList = new ArrayList<String>();
     switch (code) {
+    
+    case ALL:
+      menuList.addAll(aSportScraper.getMenu());
+      menuList.addAll(mikiScraper.getMenu());
+      menuList.addAll(napurkynceScraper.getMenu());
+      menuList.addAll(nepalScraper.getMenu());
+      menuList.addAll(rubinScraper.getMenu());
+      break;
+    
+    case ASPORT:
+      
+      menuList.addAll(aSportScraper.getMenu());
+      break;
+
     case MIKI:
 
       menuList.addAll(mikiScraper.getMenu());
@@ -52,20 +70,13 @@ public class DailyMenuBusinessImpl implements DailyMenuBusiness {
       menuList.addAll(napurkynceScraper.getMenu());
       break;
 
-    case ASPORT:
+    case NEPAL:
 
-      menuList.addAll(aSportScraper.getMenu());
+      menuList.addAll(nepalScraper.getMenu());
       break;
-
+      
     case RUBIN:
 
-      menuList.addAll(rubinScraper.getMenu());
-      break;
-
-    case ALL:
-      menuList.addAll(mikiScraper.getMenu());
-      menuList.addAll(napurkynceScraper.getMenu());
-      menuList.addAll(aSportScraper.getMenu());
       menuList.addAll(rubinScraper.getMenu());
       break;
 

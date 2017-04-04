@@ -2,9 +2,7 @@ package com.brno.domain;
 
 public enum RestaurantsCodes {
 
-  MIKI, NAPURKYNCE, ASPORT, RUBIN, ALL;
-  
-  
+  ALL, ASPORT, MIKI, NAPURKYNCE, NEPAL, RUBIN;
   
   
 }
