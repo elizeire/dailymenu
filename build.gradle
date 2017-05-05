@@ -6,12 +6,16 @@ buildscript {
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://plugins.gradle.org/m2/"}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.2.RELEASE"
 	}
 }
 
+
+apply plugin: "io.spring.dependency-management"
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
@@ -44,9 +48,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.0.2'
 	// jsoup HTML parser library @ http://jsoup.org/
-	compile 'org.jsoup:jsoup:1.10.2'	
+	compile 'org.jsoup:jsoup:1.10.2'
 	compile 'com.google.http-client:google-http-client-gson:1.19.0'
- 	compile 'com.google.apis:google-api-services-translate:v2-rev48-1.22.0'	
+ 	compile 'com.google.apis:google-api-services-translate:v2-rev48-1.22.0'
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
